@@ -60,8 +60,11 @@ if (signupBtn) {
 
   function submitAdminPassword() {
     const pw = adminPassInput ? adminPassInput.value.trim() : "";
-    // Change "YOUR_SECRET_KEY_HERE" below to whatever password you want to use.
-    if (pw === "YOUR_SECRET_KEY_HERE") {
+    
+    // Using the secret stored in the ignored secrets.js file!
+    const validPassword = typeof ADMIN_SECRET !== "undefined" ? ADMIN_SECRET : "FALLBACK_SECRET";
+    
+    if (pw === validPassword) {
       closeAdminModal();
       window.location.href = "admin.html";
     } else {

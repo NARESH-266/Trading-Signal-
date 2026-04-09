@@ -1,0 +1,7 @@
+# Ignore the secrets file so it never gets uploaded
+secrets.js
+
+# General ignores
+node_modules/
+.DS_Store
+*.log
