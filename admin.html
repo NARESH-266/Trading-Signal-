@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Top bar with logout -->
+    <div class="topbar">
+      <h2><img src="logo.png" alt="Logo" class="topbar-logo"> Admin Control</h2>
+
+      <!-- Tier Toggle -->
+      <div class="tier-toggle" id="tierToggle" title="Choose who this signal is for">
+        <button type="button" class="tier-btn active" id="tierFree" onclick="setTier('free')">🌐 Free</button>
+        <button type="button" class="tier-btn" id="tierPremium" onclick="setTier('premium')">👑 Premium</button>
+      </div>
+
+      <button id="logoutBtn" class="logout">Logout</button>
+    </div>
+
+    <!-- Admin Broadcast Message Section -->
+    <div class="admin-broadcast-box">
+      <div class="admin-broadcast-header">
+        <span>📢 Broadcast Message to Users</span>
+      </div>
+      <div class="admin-broadcast-body">
+        <textarea id="broadcastInput" rows="3" placeholder="e.g. Signals will be posted at 3:00 AM UTC tonight. Stay tuned!"></textarea>
+        <div class="admin-broadcast-actions">
+          <button type="button" id="sendMsgBtn" class="send-msg-btn">📤 Send Message</button>
+          <button type="button" id="clearMsgBtn" class="clear-msg-btn">🗑️ Clear Message</button>
+        </div>
+        <p id="broadcastStatus" class="broadcast-status" style="display:none;"></p>
+      </div>
+    </div>
+
+    <input type="text" id="searchPair" placeholder="Search currency pair...">
+
+    <form id="signalForm">
+      <label for="pair">Currency Pair:</label>
+      <select id="pair" required>
+        <option value="EUR/USD">EUR/USD</option>
+        <option value="GBP/USD">GBP/USD</option>
+        <option value="USD/JPY">USD/JPY</option>
+        <option value="AUD/USD">AUD/USD</option>
+        <option value="USD/INR">USD/INR</option>
+        <option value="CAD/USD">CAD/USD</option>
+        <option value="NZD/USD">NZD/USD</option>
+        <option value="CHF/USD">CHF/USD</option>
+      </select>
+
+      <!-- UTC dropdown -->
+      <label for="utcZone">UTC Zone:</label>
+      <select id="utcZone" required>
+        <option value="UTC-12">UTC-12</option>
+        <option value="UTC-11">UTC-11</option>
+        <option value="UTC-10">UTC-10</option>
+        <option value="UTC-9">UTC-9</option>
+        <option value="UTC-8">UTC-8</option>
+        <option value="UTC-7">UTC-7</option>
+        <option value="UTC-6">UTC-6</option>
+        <option value="UTC-5">UTC-5</option>
+        <option value="UTC-4">UTC-4</option>
+        <option value="UTC-3">UTC-3</option>
+        <option value="UTC-2">UTC-2</option>
+        <option value="UTC-1">UTC-1</option>
+        <option value="UTC">UTC</option>
+        <option value="UTC+1">UTC+1</option>
+        <option value="UTC+2">UTC+2</option>
+        <option value="UTC+3">UTC+3</option>
+        <option value="UTC+4">UTC+4</option>
+        <option value="UTC+5">UTC+5</option>
+        <option value="UTC+6">UTC+6</option>
+        <option value="UTC+7">UTC+7</option>
+        <option value="UTC+8">UTC+8</option>
+        <option value="UTC+9">UTC+9</option>
+        <option value="UTC+10">UTC+10</option>
+        <option value="UTC+11">UTC+11</option>
+        <option value="UTC+12">UTC+12</option>
+        <option value="UTC+13">UTC+13</option>
+        <option value="UTC+14">UTC+14</option>
+      </select>
+
+      <!-- Hour and Minute inputs -->
+      <label for="hour">Hour (00–23):</label>
+      <select id="hour" required>
+        <option value="00">00</option>
+        <option value="01">01</option>
+        <option value="02">02</option>
+        <option value="03">03</option>
+        <option value="04">04</option>
+        <option value="05">05</option>
+        <option value="06">06</option>
+        <option value="07">07</option>
+        <option value="08">08</option>
+        <option value="09">09</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+        <option value="19">19</option>
+        <option value="20">20</option>
+        <option value="21">21</option>
+        <option value="22">22</option>
+        <option value="23">23</option>
+      </select>
+
+      <label for="minute">Minute (00–59):</label>
+      <input type="number" id="minute" min="0" max="59" required placeholder="00">
+
+      <label for="direction">Direction:</label>
+      <select id="direction" required>
+        <option value="Buy">Buy</option>
+        <option value="Sell">Sell</option>
+      </select>
+
+      <label for="confidence">Confidence:</label>
+      <select id="confidence" required>
+        <option value="50">50%</option>
+        <option value="60">60%</option>
+        <option value="70">70%</option>
+        <option value="80">80%</option>
+        <option value="90">90%</option>
+        <option value="100">100%</option>
+      </select>
+
+      <!-- NEW Martingale dropdown -->
+      <label for="martingale">Martingale:</label>
+      <select id="martingale" required>
+        <option value="None">None</option>
+        <option value="Martingale 2">Martingale 2</option>
+        <option value="Martingale 3">Martingale 3</option>
+      </select>
+
+      <button type="submit">Send Signal</button>
+    </form>
+
+    <div id="adminSignals">
+      <h3>Sent Signals</h3>
+      <ul id="signalList"></ul>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

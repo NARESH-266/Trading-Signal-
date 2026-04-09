@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trading App - Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>🔐 Secure Login</h2>
+    <p class="subtitle">Access your trading dashboard</p>
+    <form id="loginForm">
+      <input type="text" placeholder="Email" id="loginEmail" required>
+      <input type="password" placeholder="Password" id="loginPassword" required>
+      <button type="submit">Login</button>
+    </form>
+    <button id="signupBtn">Sign Up</button>
+  </div>
+
+  <!-- Admin Password Modal -->
+  <div id="adminModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;display:none;align-items:center;justify-content:center;">
+    <div style="background:linear-gradient(145deg,#0f0c29,#1e1a4a);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:2rem 2.2rem;width:320px;box-shadow:0 20px 50px rgba(0,0,0,0.6);">
+      <h3 style="margin:0 0 0.4rem;color:#fff;font-size:1.1rem;">🔐 Admin Access</h3>
+      <p style="margin:0 0 1.2rem;color:#aaa;font-size:0.85rem;">Enter admin password to continue</p>
+      <input id="adminPassInput" type="password" placeholder="Password" style="width:100%;padding:0.75rem 1rem;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.07);color:#fff;font-size:0.95rem;outline:none;margin-bottom:1rem;box-sizing:border-box;">
+      <div style="display:flex;gap:0.7rem;">
+        <button id="adminCancelBtn" style="flex:1;padding:0.65rem;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:#ccc;cursor:pointer;font-size:0.9rem;">Cancel</button>
+        <button id="adminSubmitBtn" style="flex:1;padding:0.65rem;border-radius:10px;border:none;background:linear-gradient(135deg,#833ab4,#fd1d1d);color:#fff;cursor:pointer;font-size:0.9rem;font-weight:700;">Enter</button>
+      </div>
+      <p id="adminError" style="color:#ff4d4d;font-size:0.82rem;margin:0.7rem 0 0;display:none;">❌ Wrong password. Try again.</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

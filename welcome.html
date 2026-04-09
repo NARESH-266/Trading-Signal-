@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trading App - Signals</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Top bar with plan badge and logout -->
+    <div class="topbar">
+      <h2><img src="logo.png" alt="Logo" class="topbar-logo"> Signals Dashboard</h2>
+      <div class="plan-badge" id="planBadge">🌐 Free Plan</div>
+      <button class="vip-btn" id="vipBtn" onclick="window.location.href='subscription.html'">👑 Go VIP</button>
+      <button id="logoutBtn" class="logout">Logout</button>
+    </div>
+
+    <p class="subtitle" id="dashboardSubtitle">Stay updated with the latest signals</p>
+
+    <!-- Admin Broadcast Message Banner -->
+    <div class="admin-msg-banner" id="adminMsgBanner" style="display:none;">
+      <span class="admin-msg-icon">📢</span>
+      <div class="admin-msg-body">
+        <span class="admin-msg-label">Admin Message</span>
+        <span class="admin-msg-text" id="adminMsgText"></span>
+      </div>
+      <span class="admin-msg-time" id="adminMsgTime"></span>
+    </div>
+
+    <div class="refresh-bar">
+      <button class="refresh-btn" id="refreshBtn" onclick="displayWelcomeSignals()" title="Refresh signals">
+        <span class="refresh-icon">⟳</span> Refresh Signals
+      </button>
+      <span class="last-updated" id="lastUpdated"></span>
+    </div>
+
+    <div id="signalTableContainer"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

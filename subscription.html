@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trading App - Go Premium</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Subscription Page Specific Styles ── */
+    body { align-items: flex-start; }
+
+    .sub-wrapper {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 0 40px;
+    }
+
+    .sub-header {
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .sub-header h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #f6a623, #e8690e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.4rem;
+    }
+
+    .sub-header p {
+      color: var(--text-dim);
+      font-size: 1.1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: auto;
+      padding: 0.5rem 1.1rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--glass-border);
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      box-shadow: none;
+      margin: 0;
+      z-index: 100;
+    }
+
+    .back-btn:hover {
+      background: var(--glass);
+      color: #fff;
+      transform: translateX(-3px);
+      box-shadow: none;
+    }
+
+    /* Plans Grid */
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .plan-card {
+      background: linear-gradient(145deg, #0f0c29, #1e1a4a, #24243e);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    /* Popular card highlight */
+    .plan-card.popular {
+      border-color: #f6a623;
+      background: linear-gradient(145deg, #151030, #261f52, #2d2a45); /* slightly golden-navy tint for popular */
+      box-shadow: 0 0 30px rgba(246, 166, 35, 0.12);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(45deg, #f6a623, #e8690e);
+      color: #000;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 5px 18px;
+      border-radius: 0 0 12px 12px;
+    }
+
+    .plan-icon {
+      font-size: 2.8rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .plan-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .plan-duration {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      font-weight: 400;
+    }
+
+    .plan-price {
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1;
+      color: #fff;
+    }
+
+    .plan-price span.currency {
+      font-size: 1.4rem;
+      vertical-align: super;
+      font-weight: 600;
+      color: var(--text-dim);
+    }
+
+    .plan-price span.period {
+      font-size: 1rem;
+      color: var(--text-dim);
+      font-weight: 400;
+    }
+
+    .plan-features {
+      list-style: none;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      flex: 1;
+    }
+
+    .plan-features li {
+      font-size: 0.9rem;
+      color: #ccc;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .plan-features li::before {
+      content: "✓";
+      color: var(--success);
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .subscribe-btn {
+      margin-top: 0.5rem;
+      padding: 1rem;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, var(--primary), #5848ff);
+      box-shadow: 0 4px 15px rgba(131,58,180,0.25);
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .subscribe-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(131,58,180,0.45);
+      filter: brightness(1.1);
+    }
+
+    .plan-card.popular .subscribe-btn {
+      background: linear-gradient(45deg, #f6a623, #e8690e);
+      box-shadow: 0 4px 15px rgba(246,166,35,0.3);
+    }
+
+    .plan-card.popular .subscribe-btn:hover {
+      box-shadow: 0 8px 25px rgba(246,166,35,0.5);
+    }
+
+    /* Info Toast (Coming Soon) */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: linear-gradient(45deg, #f6a623, #e8690e);
+      color: #000;
+      font-weight: 700;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      z-index: 999;
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
+      pointer-events: none;
+      text-align: center;
+      max-width: 90vw;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Active plan notice */
+    .active-plan-notice {
+      text-align: center;
+      background: rgba(0,255,136,0.08);
+      border: 1px solid rgba(0,255,136,0.2);
+      border-radius: 16px;
+      padding: 1.25rem;
+      color: var(--success);
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .plans-grid {
+        grid-template-columns: 1fr;
+        max-width: 360px;
+        margin: 1rem auto 0;
+      }
+
+      .sub-header h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <button class="back-btn" onclick="window.location.href='welcome.html'">← Back</button>
+
+  <div class="sub-wrapper">
+    <div class="sub-header">
+      <h1>👑 Go Premium</h1>
+      <p>Unlock exclusive trading signals and gain an edge in the market</p>
+    </div>
+
+    <!-- Active plan notice (shown if already subscribed) -->
+    <div class="active-plan-notice" id="activePlanNotice">
+      ✅ You already have an active <strong id="activePlanName"></strong> plan — expires on <strong id="activePlanExpiry"></strong>
+    </div>
+
+    <!-- Plans Grid -->
+    <div class="plans-grid">
+
+      <!-- Weekly -->
+      <div class="plan-card">
+        <div class="plan-icon">⚡</div>
+        <div class="plan-name">Weekly</div>
+        <div class="plan-duration">7 Days Access</div>
+        <div class="plan-price">
+          <span class="currency">₹</span>49
+        </div>
+        <ul class="plan-features">
+          <li>All Premium Signals</li>
+          <li>Real-time Updates</li>
+          <li>Buy &amp; Sell Directions</li>
+          <li>Confidence Levels</li>
+          <li>Martingale Info</li>
+        </ul>
+        <button class="subscribe-btn" onclick="subscribe('Weekly', 49, 7)">Get Started</button>
+      </div>
+
+      <!-- 15 Days (Popular) -->
+      <div class="plan-card popular">
+        <div class="popular-badge">⭐ Most Popular</div>
+        <div class="plan-icon">🔥</div>
+        <div class="plan-name">Bi-Weekly</div>
+        <div class="plan-duration">15 Days Access</div>
+        <div class="plan-price">
+          <span class="currency">₹</span>99
+        </div>
+        <ul class="plan-features">
+          <li>All Premium Signals</li>
+          <li>Real-time Updates</li>
+          <li>Buy &amp; Sell Directions</li>
+          <li>Confidence Levels</li>
+          <li>Martingale Info</li>
+          <li>Priority Signal Access</li>
+        </ul>
+        <button class="subscribe-btn" onclick="subscribe('15 Days', 99, 15)">Subscribe Now</button>
+      </div>
+
+      <!-- Monthly -->
+      <div class="plan-card">
+        <div class="plan-icon">💎</div>
+        <div class="plan-name">Monthly</div>
+        <div class="plan-duration">30 Days Access</div>
+        <div class="plan-price">
+          <span class="currency">₹</span>150
+        </div>
+        <ul class="plan-features">
+          <li>All Premium Signals</li>
+          <li>Real-time Updates</li>
+          <li>Buy &amp; Sell Directions</li>
+          <li>Confidence Levels</li>
+          <li>Martingale Info</li>
+          <li>Priority Signal Access</li>
+          <li>Best Value Deal</li>
+        </ul>
+        <button class="subscribe-btn" onclick="subscribe('Monthly', 150, 30)">Best Value</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Success Toast -->
+  <div class="toast" id="toast">🎉 Subscribed! Redirecting...</div>
+
+  <script>
+    // Check if user already has active plan
+    window.addEventListener("DOMContentLoaded", function() {
+      const plan   = localStorage.getItem("planName");
+      const expiry = localStorage.getItem("planExpiry");
+
+      if (plan && expiry) {
+        const expiryDate = new Date(parseInt(expiry, 10));
+        if (expiryDate > new Date()) {
+          const notice = document.getElementById("activePlanNotice");
+          document.getElementById("activePlanName").textContent   = plan;
+          document.getElementById("activePlanExpiry").textContent = expiryDate.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
+          notice.style.display = "block";
+        } else {
+          // expired — clear plan
+          localStorage.removeItem("userPlan");
+          localStorage.removeItem("planName");
+          localStorage.removeItem("planExpiry");
+        }
+      }
+    });
+
+    function subscribe(planName, price, days) {
+      // Payment integration not yet added.
+      // Do NOT activate premium until payment is confirmed.
+      const toast = document.getElementById("toast");
+      toast.textContent = `⏳ Payment for ${planName} (₹${price}) coming soon! Stay tuned.`;
+      toast.classList.add("show");
+
+      // Auto-hide after 3 seconds
+      setTimeout(function() {
+        toast.classList.remove("show");
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

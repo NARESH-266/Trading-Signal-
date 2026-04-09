@@ -1,0 +1,70 @@
+======================================================
+ TRADING APP: SETUP & EXECUTION INSTRUCTIONS
+======================================================
+
+This guide will walk you through the exact steps to easily 
+execute and run the Trading Application locally on your machine 
+using Visual Studio Code (VS Code). 
+
+------------------------------------------------------
+ STEP 1: INSTALL REQUIRED SOFTWARE
+------------------------------------------------------
+To run this application, you only need a modern code editor 
+and an extension to host the local server.
+
+1. VS Code (Visual Studio Code):
+   If you don't have it installed already, download and install 
+   it from the official website.
+   Download Link: https://code.visualstudio.com/
+
+2. Live Server (VS Code Extension):
+   This application utilizes modern web features (like audio pushes 
+   and local storage) that perform best when served from a local 
+   web server rather than opening HTML files directly from your disk.
+   
+   How to install:
+   - Open VS Code.
+   - Click on the "Extensions" icon on the left sidebar (or press Ctrl+Shift+X).
+   - In the search bar, type: "Live Server"
+   - Look for the extension authored by "Ritwick Dey" and click "Install".
+   Extension Link: https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer
+
+------------------------------------------------------
+ STEP 2: OPENING YOUR PROJECT
+------------------------------------------------------
+1. Open VS Code.
+2. Go to the top left menu: Click "File" -> "Open Folder..."
+3. Navigate to your project directory and select the "trading-app" folder 
+   (Location: d:\major project\trading-app\trading-app).
+4. You should now see all your files (index.html, script.js, style.css) 
+   listed on the left-side Explorer panel.
+
+------------------------------------------------------
+ STEP 3: RUNNING THE APPLICATION
+------------------------------------------------------
+1. In the VS Code Explorer panel (on the left), click on "index.html" 
+   to open it in the editor.
+2. Once "index.html" is open, look at the very bottom right corner 
+   of the VS Code window (the blue status bar).
+3. You will see a button labeled "Go Live". Click it!
+4. Your default web browser will automatically pop open and take you 
+   to the running application (usually at http://127.0.0.1:5500/index.html).
+
+------------------------------------------------------
+ EXTRA INFORMATION: APP NAVIGATION
+------------------------------------------------------
+1. User Flow: 
+   Enter any email/password on the Login screen and hit "Login" 
+   to access the Dashboard.
+
+2. Admin Access Flow:
+   To access the Admin Panel, go to the Login or Signup page. 
+   - CLICK AND HOLD the 'Sign Up' button for 1 second.
+   - A secret prompt will appear.
+   - Type the admin secret key you configure in `script.js`.
+   - Press "Submit" to be securely logged into the Admin Panel.
+
+3. Testing Live Notifications:
+   Open the Dashboard in one browser tab, and the Admin panel in another. 
+   Send a message or a signal in the Admin panel and watch it pop up 
+   instantly combined with a notification sound on the Dashboard!
